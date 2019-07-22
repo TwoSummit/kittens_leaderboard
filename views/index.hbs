@@ -128,15 +128,15 @@ function init(buildingsData, resourcesData, sciencesData, workshopsData) {
 
   var grids = ["buildingsGrid", "resourcesGrid", "sciencesGrid", "workshopsGrid"]
 
-  $('#buildingsGrid').text('');
-  $('#resourcesGrid').text('');
-  $('#sciencesGrid').text('');
-  $('#workshopsGrid').text('');
   var buildingsGrid = $('#buildingsGrid');
   var resourcesGrid = $('#resourcesGrid');
   var sciencesGrid  = $('#sciencesGrid');
   var workshopsGrid = $('#workshopsGrid');
 
+  $('#buildingsGrid').text('');
+  $('#resourcesGrid').text('');
+  $('#sciencesGrid').text('');
+  $('#workshopsGrid').text('');
   buildingsGrid.kendoGrid({
     dataSource: buildingsData,
     dataBound: function() {
