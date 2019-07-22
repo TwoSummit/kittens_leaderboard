@@ -35,7 +35,6 @@ exports.kittensGet = (req, res) => {
       var parsedData = JSON.parse(rawData)
       asyncFileContent.push(parsedData);
     });
-    console.dir(asyncFileContent);
     res.json(asyncFileContent);
   });
 };
