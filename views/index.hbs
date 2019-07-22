@@ -19,6 +19,11 @@ $(function() {
       var resourcesData = [];
       var sciencesData  = [];
       var workshopsData = [];
+      
+      $('#buildingsGrid').text('Loading...');
+      $('#resourcesGrid').text('Loading...');
+      $('#sciencesGrid').text('Loading...');
+      $('#workshopsGrid').text('Loading...');
 
       // Loop through raw data
       rawData.forEach( (json) => {
@@ -160,6 +165,11 @@ function init(buildingsData, resourcesData, sciencesData, workshopsData) {
       }
     }
   });
+      
+  $('#buildingsGrid').text('');
+  $('#resourcesGrid').text('');
+  $('#sciencesGrid').text('');
+  $('#workshopsGrid').text('');
   
 }
 </script>
