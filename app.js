@@ -21,7 +21,7 @@ if (template_engine == 'hbs') {
 // Set details of app
 app.set('template_engine', template_engine);
 app.set('port', port);
-app.set('views', path.normalize(__dirname + '\\views'));
+app.set('views', path.normalize(__dirname + '/views'));
 app.set('view engine', template_engine);
 app.use(express.static('public'));
 
