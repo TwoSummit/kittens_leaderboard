@@ -128,6 +128,10 @@ function init(buildingsData, resourcesData, sciencesData, workshopsData) {
 
   var grids = ["buildingsGrid", "resourcesGrid", "sciencesGrid", "workshopsGrid"]
 
+  $('#buildingsGrid').text('');
+  $('#resourcesGrid').text('');
+  $('#sciencesGrid').text('');
+  $('#workshopsGrid').text('');
   var buildingsGrid = $('#buildingsGrid');
   var resourcesGrid = $('#resourcesGrid');
   var sciencesGrid  = $('#sciencesGrid');
@@ -166,10 +170,6 @@ function init(buildingsData, resourcesData, sciencesData, workshopsData) {
     }
   });
       
-  $('#buildingsGrid').text('');
-  $('#resourcesGrid').text('');
-  $('#sciencesGrid').text('');
-  $('#workshopsGrid').text('');
   
 }
 </script>
