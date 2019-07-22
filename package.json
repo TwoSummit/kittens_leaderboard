@@ -1,0 +1,29 @@
+{
+  "name": "Leaderboard",
+  "version": "1.0.0",
+  "description": "Leaderboard",
+  "author": "Corey Antolovich",
+  "license": "MIT",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "*",
+    "express-handlebars": "*",
+    "handlebars-helpers": "*",
+    "body-parser": "*",
+    "fs": "*",
+    "path": "*"
+  },
+  "devDependencies": {
+    "del": "*",
+    "gulp": "*",
+    "gulp-clean-css": "*",
+    "gulp-concat": "*",
+    "gulp-imagemin": "*",
+    "gulp-less": "*",
+    "gulp-rename": "*",
+    "gulp-sass": "*",
+    "gulp-uglify": "*"
+  }
+}

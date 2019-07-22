@@ -1,0 +1,165 @@
+<h1>Buildings</h1>
+<div id="buildingsGrid"></div>
+<h1>Resources</h1>
+<div id="resourcesGrid"></div>
+<h1>Sciences</h1>
+<div id="sciencesGrid"></div>
+<h1>Workshops</h1>
+<div id="workshopsGrid"></div>
+
+<script type="application/javascript">
+$(function() {
+  console.log('Client side javascript file is loaded!');
+
+  $.ajax({
+    url: "/api/kittens", 
+    success: function(res){
+      var rawData = res;
+      var buildingsData = [];
+      var resourcesData = [];
+      var sciencesData  = [];
+      var workshopsData = [];
+
+      // Loop through raw data
+      rawData.forEach( (json) => {
+        
+        // Store globally player name 
+        var playerName = json.playerData.playerName;
+
+        // ----------------Buildings-----------------------
+        // Loop through buildings
+        var buildingNames   = [];
+        var buildingAmounts = [];
+        var combinedBuildingData = {};
+
+        json.kittensData.buildings.forEach( (building) => {
+
+          // Building information
+          buildingNames.push(building.name);
+          buildingAmounts.push(building.val);
+
+        });
+
+        // Combine data to 1 dataset.
+        var combinedBuildingDataLength = buildingNames.length === buildingAmounts.length ? buildingNames.length : 0;
+
+        combinedBuildingData[ "playerName" ] = playerName;
+        for(var i = 0; i < combinedBuildingDataLength; i++)
+            combinedBuildingData[ buildingNames[i] ] = buildingAmounts[i];
+
+        // ----------------Resource-----------------------
+        // Loop through
+        var resourceNames   = [];
+        var resourceAmounts = [];
+        var combinedResourceData = {};
+        json.kittensData.resources.forEach( (resource) => {
+
+          // Resource information
+          resourceNames.push(resource.name);
+          resourceAmounts.push(resource.value);
+
+        });
+
+        // Combine data to 1 dataset.
+        var combinedResourceDataLength = resourceNames.length === resourceAmounts.length ? resourceNames.length : 0;
+
+        combinedResourceData[ "playerName" ] = playerName;
+        for(var i = 0; i < combinedResourceDataLength; i++)
+            combinedResourceData[ resourceNames[i] ] = resourceAmounts[i];
+
+        // ----------------Science-----------------------
+        // Loop through
+        var scienceNames   = [];
+        var scienceUnlocked = [];
+        var combinedScienceData = {};
+        json.kittensData.science.forEach( (science) => {
+
+          // science information
+          scienceNames.push(science.name);
+          scienceUnlocked.push(science.unlocked);
+
+        });
+
+        // Combine data to 1 dataset.
+        var combinedScienceDataLength = scienceNames.length === scienceUnlocked.length ? scienceNames.length : 0;
+
+        combinedScienceData[ "playerName" ] = playerName;
+        for(var i = 0; i < combinedScienceDataLength; i++)
+            combinedScienceData[ scienceNames[i] ] = scienceUnlocked[i];
+
+        // ----------------Workshops-----------------------
+        // Loop through
+        var workshopNames        = [];
+        var workshopUnlocks      = [];
+        var combinedWorkshopData = {};
+        json.kittensData.workshops.forEach( (workshop) => {
+
+          // workshop information
+          workshopNames.push(workshop.name);
+          workshopUnlocks.push(workshop.unlocked);
+
+        });
+
+        // Combine data to 1 dataset.
+        var combinedWorkshopDataLength = workshopNames.length === workshopUnlocks.length ? workshopNames.length : 0;
+
+        combinedWorkshopData[ "playerName" ] = playerName;
+        for(var i = 0; i < combinedWorkshopDataLength; i++)
+            combinedWorkshopData[ workshopNames[i] ] = workshopUnlocks[i];
+
+        // ----------------Push Data-----------------------
+        buildingsData.push(combinedBuildingData);
+        resourcesData.push(combinedResourceData);
+        sciencesData.push(combinedScienceData);
+        workshopsData.push(combinedWorkshopData);
+      });
+
+      init(buildingsData, resourcesData, sciencesData, workshopsData);
+    }
+  });
+});
+
+function init(buildingsData, resourcesData, sciencesData, workshopsData) {
+
+  var grids = ["buildingsGrid", "resourcesGrid", "sciencesGrid", "workshopsGrid"]
+
+  var buildingsGrid = $('#buildingsGrid');
+  var resourcesGrid = $('#resourcesGrid');
+  var sciencesGrid  = $('#sciencesGrid');
+  var workshopsGrid = $('#workshopsGrid');
+
+  buildingsGrid.kendoGrid({
+    dataSource: buildingsData,
+    dataBound: function() {
+      for (var i = 0; i < this.columns.length; i++) {
+        this.autoFitColumn(i);
+      }
+    }
+  });
+  resourcesGrid.kendoGrid({
+    dataSource: resourcesData,
+    dataBound: function() {
+      for (var i = 0; i < this.columns.length; i++) {
+        this.autoFitColumn(i);
+      }
+    }
+  });
+  sciencesGrid.kendoGrid({
+    dataSource: sciencesData,
+    dataBound: function() {
+      for (var i = 0; i < this.columns.length; i++) {
+        this.autoFitColumn(i);
+      }
+    }
+  });
+  workshopsGrid.kendoGrid({
+    dataSource: workshopsData,
+    dataBound: function() {
+      for (var i = 0; i < this.columns.length; i++) {
+        this.autoFitColumn(i);
+      }
+    }
+  });
+  
+}
+</script>
