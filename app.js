@@ -25,6 +25,14 @@ app.set('views', path.normalize(__dirname + '/views'));
 app.set('view engine', template_engine);
 app.use(express.static('public'));
 
+// Cross origin middleware --- Found at https://stackoverflow.com/questions/18642828/origin-origin-is-not-allowed-by-access-control-allow-origin
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', "*");
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+});
+
 // Body Parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({

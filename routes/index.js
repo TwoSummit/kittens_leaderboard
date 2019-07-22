@@ -10,8 +10,6 @@ exports.kittensIndex = (req, res) => {
 };
 
 exports.kittensGet = (req, res) => {
-  let data = req.body;
-  let playerName = 'jeff';
   let baseURL = "./kittens/stats/";
   
   // Get files in directory
@@ -19,6 +17,8 @@ exports.kittensGet = (req, res) => {
     // Error handling
     if (err){
       return console.dir('Error', err);
+    } else {
+      console.log('Get', 'Read data request.');
     }
 
     // Store file names
@@ -35,6 +35,7 @@ exports.kittensGet = (req, res) => {
       var parsedData = JSON.parse(rawData)
       asyncFileContent.push(parsedData);
     });
+    console.log('Success', 'Returned kittens game competitive stats');
     res.json(asyncFileContent);
   });
 };
@@ -47,7 +48,7 @@ exports.kittensPost = (req, res) => {
       typeof req.body.playerData.playerName === undefined) {
     return console.dir('Error', err);
   } else {
-    console.log('Posting data to kittens')
+    console.log('Post', 'Update data request');
   }
 
   let data = req.body;
@@ -65,8 +66,8 @@ exports.kittensPost = (req, res) => {
       if(err) {
         return console.dir('Error', err);
       }
-
       console.log('Success', 'Wrote to file ' + baseURL);
+      res.status(200).end();
     }); 
 
   });
