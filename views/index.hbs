@@ -6,6 +6,8 @@
 <div id="sciencesGrid"></div>
 <h1>Workshops</h1>
 <div id="workshopsGrid"></div>
+<h1>Stats</h1>
+<div id="statsGrid"></div>
 
 <script type="application/javascript">
 $(function() {
@@ -15,15 +17,17 @@ $(function() {
       $('#resourcesGrid').text('Loading...');
       $('#sciencesGrid').text('Loading...');
       $('#workshopsGrid').text('Loading...');
+      $('#statsGrid').text('Loading...');
 
   $.ajax({
     url: "/api/kittens", 
     success: function(res){
-      var rawData = res;
+      var rawData       = res;
       var buildingsData = [];
       var resourcesData = [];
       var sciencesData  = [];
       var workshopsData = [];
+      var statsData     = [];
 
       // Loop through raw data
       rawData.forEach( (json) => {
@@ -112,37 +116,60 @@ $(function() {
         for(var i = 0; i < combinedWorkshopDataLength; i++)
             combinedWorkshopData[ workshopNames[i] ] = workshopUnlocks[i];
 
+        // ----------------Stats-----------------------
+        // Loop through
+        var statsNames           = [];
+        var statsValues          = [];
+        var combinedStatsData    = {};
+        json.kittensData.stats.forEach( (stat) => {
+
+          // stat information
+          statsNames.push(stat.name);
+          statsValues.push(stat.val);
+
+        });
+
+        // Combine data to 1 dataset.
+        var combinedStatsDataLength = statsNames.length === statsValues.length ? statsNames.length : 0;
+
+        combinedStatsData[ "playerName" ] = playerName;
+        for(var i = 0; i < combinedStatsDataLength; i++)
+            combinedStatsData[ statsNames[i] ] = statsValues[i];
+
         // ----------------Push Data-----------------------
         buildingsData.push(combinedBuildingData);
         resourcesData.push(combinedResourceData);
         sciencesData.push(combinedScienceData);
         workshopsData.push(combinedWorkshopData);
+        statsData.push(combinedStatsData);
       });
 
-      init(buildingsData, resourcesData, sciencesData, workshopsData);
+      init(buildingsData, resourcesData, sciencesData, workshopsData, statsData);
     },
     error: function() {
       $('#buildingsGrid').text('Error...');
       $('#resourcesGrid').text('Error...');
       $('#sciencesGrid').text('Error...');
       $('#workshopsGrid').text('Error...');
+      $('#statsGrid').text('Error...');
     }
   });
 });
 
-function init(buildingsData, resourcesData, sciencesData, workshopsData) {
+function init(buildingsData, resourcesData, sciencesData, workshopsData, statsData) {
 
-  var grids = ["buildingsGrid", "resourcesGrid", "sciencesGrid", "workshopsGrid"]
-
+  var grids = ["buildingsGrid", "resourcesGrid", "sciencesGrid", "workshopsGrid", "statsGrid"]; // Not doing anything with this yet.
   var buildingsGrid = $('#buildingsGrid');
   var resourcesGrid = $('#resourcesGrid');
   var sciencesGrid  = $('#sciencesGrid');
   var workshopsGrid = $('#workshopsGrid');
+  var statsGrid     = $('#statsGrid');
 
   $('#buildingsGrid').text('');
   $('#resourcesGrid').text('');
   $('#sciencesGrid').text('');
   $('#workshopsGrid').text('');
+  $('#statsGrid').text('');
 
   buildingsGrid.kendoGrid({
     dataSource: buildingsData,
@@ -170,6 +197,14 @@ function init(buildingsData, resourcesData, sciencesData, workshopsData) {
   });
   workshopsGrid.kendoGrid({
     dataSource: workshopsData,
+    dataBound: function() {
+      for (var i = 0; i < this.columns.length; i++) {
+        this.autoFitColumn(i);
+      }
+    }
+  });
+  statsGrid.kendoGrid({
+    dataSource: statsData,
     dataBound: function() {
       for (var i = 0; i < this.columns.length; i++) {
         this.autoFitColumn(i);
