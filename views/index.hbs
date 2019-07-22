@@ -10,6 +10,11 @@
 <script type="application/javascript">
 $(function() {
   console.log('Client side javascript file is loaded!');
+      
+      $('#buildingsGrid').text('Loading...');
+      $('#resourcesGrid').text('Loading...');
+      $('#sciencesGrid').text('Loading...');
+      $('#workshopsGrid').text('Loading...');
 
   $.ajax({
     url: "/api/kittens", 
@@ -19,11 +24,6 @@ $(function() {
       var resourcesData = [];
       var sciencesData  = [];
       var workshopsData = [];
-      
-      $('#buildingsGrid').text('Loading...');
-      $('#resourcesGrid').text('Loading...');
-      $('#sciencesGrid').text('Loading...');
-      $('#workshopsGrid').text('Loading...');
 
       // Loop through raw data
       rawData.forEach( (json) => {
@@ -120,6 +120,12 @@ $(function() {
       });
 
       init(buildingsData, resourcesData, sciencesData, workshopsData);
+    },
+    error: function() {
+      $('#buildingsGrid').text('Error...');
+      $('#resourcesGrid').text('Error...');
+      $('#sciencesGrid').text('Error...');
+      $('#workshopsGrid').text('Error...');
     }
   });
 });
@@ -137,7 +143,7 @@ function init(buildingsData, resourcesData, sciencesData, workshopsData) {
   $('#resourcesGrid').text('');
   $('#sciencesGrid').text('');
   $('#workshopsGrid').text('');
-  
+
   buildingsGrid.kendoGrid({
     dataSource: buildingsData,
     dataBound: function() {
